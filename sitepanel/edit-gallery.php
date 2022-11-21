@@ -1,0 +1,71 @@
+<?php 
+$page_title="Gallery Management";
+$page_subtitle="Edit Gallery";include("header.php");include("left-nev.php");
+?>
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <h1>
+        <?php echo $page_title;?>
+        <small><?php echo $page_subtitle;?></small>
+      </h1>
+      <ol class="breadcrumb">
+        <li><a href="<?php echo base_url('sitepanel/dashboard') ?>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?php echo base_url('sitepanel/dashboard') ?>">Dashboard</a></li>
+		<li><a href="<?php echo base_url()?>sitepanel/galleries/0"><?php echo $page_title;?></a></li>
+        <li class="active"><?php echo $page_subtitle;?></li>
+      </ol>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+      <!-- Main row -->
+      <div class="row">
+        <!-- Left col -->
+		<section class="col-lg-12 connectedSortable">
+          <!-- TO DO List -->          
+            <div class="box box-info">						<?php echo isset($error) ? $error : ''; ?>           
+            <div class="box-body">			<?php         $attributes = ['name' => 'formEdit', 'id' => 'formEdit'];        		echo form_open_multipart('', $attributes);      ?>              <!--<form method="post" enctype="multipart/form-data">-->		   			   <?php 			   if(form_error('body'))			   {				echo form_error('body');   			   }			   ?>			    Gallery Category <span style="color:red;">*</span>                <div class="form-group">                  <select class="form-control" name="gallery_category">				  <option value="">Select</option>				  <?php				   $query=$this->db->query("select * from tbl_gallery_category where pg_status='Active'");				  				  $gallerycatcontent=$query->result_array();				  foreach($gallerycatcontent as $contents)				  {				  ?>				  <option value="<?=$contents['gallery_category'];?>" <?php if($contents['gallery_category']==$getgal->gallery_category) echo "selected";?>><?=str_replace("^","'",$contents['gallery_category']);?></option>				 <?php } ?></select>				  <div style="color:red"><?php echo form_error('gallery_category');?></div>                </div>				
+			  Gallery Title <span style="color:red;">*</span>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="gallery_title" value="<?php echo str_replace("^","'",$getgal->gallery_title); ?>" placeholder="Gallery Title">                  <div style="color:red"><?php echo form_error('gallery_title');?></div>
+                </div>
+				 Alt <span style="color:red;">*</span>
+				<div class="form-group">
+                  <input type="text" class="form-control" name="gallery_alt" value="<?php echo str_replace("^","'",$getgal->gallery_alt); ?>" placeholder="Gallery Alt">                   <div style="color:red"><?php echo form_error('gallery_alt');?></div>
+                </div>
+				Status <span style="color:red;"></span>
+				<div class="radio">
+                    <label>
+					  <span><input type="radio" name="pg_status" value="Active" <?php if($getgal->pg_status == 'Active') echo "checked"; ?>/></span>
+<span>Active</span>  <span style="margin-left:30px;">
+<input type="radio" name="pg_status"  value="Inactive" <?php if($getgal->pg_status == 'Inactive') echo "checked"; ?> /></span><span>Inactive</span>
+                    </label>
+                  </div>
+				
+				<div class="form-group">
+				<label for="exampleInputFile">Image <span style="color:red;">*</span></label>
+                <!--<input type="file" name="image" id="exampleInputFile">-->                <?php				echo form_upload(['name'=>'image']);				?>				<img src="<?php echo base_url().'upload/gallery/'.$getgal->image; ?>" style="heigh:100px;width:100px;margin-top:15px"/>
+                <p class="help-block">				 <?php 			  if(form_error('upload_error'))			   {				echo form_error('upload_error');   			   }			   ?></p>
+				</div>
+            </div>
+            <div class="box-footer">
+                <button type="submit" name="Submit" class="btn btn-primary">Update</button>
+				&nbsp;&nbsp;&nbsp;&nbsp;
+				<button type="reset" name="Reset" class="btn btn-primary">Reset</button>
+              </div>
+		 </form>
+
+          </div>
+
+        <!-- /.box -->
+        </section>
+        <!-- /.Left col -->
+      <!-- /.row (main row) -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+<?php include("footer.php");?>

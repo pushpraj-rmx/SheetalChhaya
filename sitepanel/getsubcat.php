@@ -1,0 +1,1 @@
+ <select class="form-control" name="service_category" >				  <option value="">Select</option>				  <?php				  foreach($getservicesubcategory as $scontents)				  {				  ?>				  <option value="<?=$scontents['service_category'];?>"><?=$scontents['service_title'];?>				  <?php				  }				  ?></select>
