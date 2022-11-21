@@ -1,4 +1,8 @@
-
+<?php
+ defined('BASEPATH') OR exit('No direct script access allowed');
+$this->load->helper('html');
+$this->load->helper('url');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
